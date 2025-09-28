@@ -33,28 +33,42 @@ class QuizScreen extends StatelessWidget {
             if (state is QuizLoading) {
               return Center(child: CircularProgressIndicator());
             } else if (state is QuizSuccess) {
-              return ListView.builder(
-                itemCount: state.quizzes.length,
-                itemBuilder: (context, index) {
-                  final q = state.quizzes[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(q.question ?? ''),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: q
-                            .getShuffledAnswers()
-                            .map(
-                              (ans) => ElevatedButton(
-                                onPressed: () {},
-                                child: Text(ans ?? ''),
-                              ),
-                            )
-                            .toList(),
-                      ),
+              if (state.isFinished) {
+                return Center(
+                  child: Text(
+                    "🎉 Quiz Finished!\nYour Score: ${state.score}/${state.quizzes.length}",
+                  ),
+                );
+              }
+              final q = state.quizzes[state.currentIndex];
+              return Padding(
+                padding: EdgeInsetsGeometry.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(q.question ?? ''),
+                    const SizedBox(height: 30),
+                    ...q.getShuffledAnswers().map((ans) {
+                      return Padding(
+                        padding: EdgeInsetsGeometry.all(6),
+                        child: ElevatedButton(
+                          onPressed: () => context
+                              .read<QuizCubit>()
+                              .answerQuestion(ans ?? ''),
+                          child: Text(ans ?? ''),
+                        ),
+                      );
+                    }).toList(),
+                    const SizedBox(height: 30),
+
+                    Text(
+                      "Score: ${state.score}",
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
                     ),
-                  );
-                },
+                  ],
+                ),
               );
             } else if (state is QuizError) {
               return Center(child: Text("Error: ${state.error}"));

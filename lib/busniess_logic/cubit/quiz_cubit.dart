@@ -9,12 +9,54 @@ class QuizCubit extends Cubit<QuizState> {
   final QuizRepo quizRepo;
   QuizCubit(this.quizRepo) : super(QuizLoading());
 
-  Future<void> loadQuiz({required int amount,required int category,required String difficulty}) async {
+  Future<void> loadQuiz({
+    required int amount,
+    required int category,
+    required String difficulty,
+  }) async {
     try {
-      final List<QuizModel> quizzes = await quizRepo.fetchQuiz(amount,category,difficulty);
-      emit(QuizSuccess(quizzes));
+      final List<QuizModel> quizzes = await quizRepo.fetchQuiz(
+        amount,
+        category,
+        difficulty,
+      );
+      emit(
+        QuizSuccess(
+          quizzes: quizzes,
+          currentIndex: 0,
+          score: 0,
+          isFinished: false,
+        ),
+      );
     } catch (e) {
       QuizError(e.toString());
+    }
+  }
+
+  void answerQuestion(String answer) {
+    if (state is QuizSuccess) {
+      final currentState = state as QuizSuccess;
+      final currentQuestion = currentState.quizzes[currentState.currentIndex];
+
+      int updatedScore = currentState.score;
+
+      if (answer == currentQuestion.correctAnswer) {
+        updatedScore++;
+      }
+
+      final nextIndex = currentState.currentIndex + 1;
+
+      if (nextIndex < currentState.quizzes.length) {
+        emit(currentState.copyWith(
+          currentIndex: nextIndex,
+          score: updatedScore,
+        ));
+      } else {
+        emit(currentState.copyWith(
+          score: updatedScore,
+          isFinished: true,
+        ));
+      }
     }
   }
 }
