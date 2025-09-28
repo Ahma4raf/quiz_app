@@ -15,8 +15,9 @@ class QuizCubit extends Cubit<QuizState> {
     required String difficulty,
   }) async {
     try {
+      final limitedAmount = amount > 20 ? 20 : amount;
       final List<QuizModel> quizzes = await quizRepo.fetchQuiz(
-        amount,
+        limitedAmount,
         category,
         difficulty,
       );
@@ -41,21 +42,19 @@ class QuizCubit extends Cubit<QuizState> {
       int updatedScore = currentState.score;
 
       if (answer == currentQuestion.correctAnswer) {
-        updatedScore++;
+        updatedScore = updatedScore == 0 ? 2 : updatedScore * 2;
+      } else if (answer != currentQuestion.correctAnswer) {
+        updatedScore = 0;
       }
 
       final nextIndex = currentState.currentIndex + 1;
 
       if (nextIndex < currentState.quizzes.length) {
-        emit(currentState.copyWith(
-          currentIndex: nextIndex,
-          score: updatedScore,
-        ));
+        emit(
+          currentState.copyWith(currentIndex: nextIndex, score: updatedScore),
+        );
       } else {
-        emit(currentState.copyWith(
-          score: updatedScore,
-          isFinished: true,
-        ));
+        emit(currentState.copyWith(score: updatedScore, isFinished: true));
       }
     }
   }

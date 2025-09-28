@@ -109,6 +109,10 @@ class _QuizPickScreenState extends State<QuizPickScreen> {
                     },
                     child: const Text("Start Quiz"),
                   ),
+                  const SizedBox(height: 20),
+                  Text('Tip: the question limit is 20 '),
+                  const SizedBox(height: 20),
+                  Text('Tip: The result is doubled or zero '),
                 ],
               ),
             );

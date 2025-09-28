@@ -35,9 +35,7 @@ class QuizScreen extends StatelessWidget {
             } else if (state is QuizSuccess) {
               if (state.isFinished) {
                 return Center(
-                  child: Text(
-                    "🎉 Quiz Finished!\nYour Score: ${state.score}/${state.quizzes.length}",
-                  ),
+                  child: Text("🎉 Quiz Finished!\nYour Score: ${state.score}"),
                 );
               }
               final q = state.quizzes[state.currentIndex];
