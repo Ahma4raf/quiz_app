@@ -22,12 +22,12 @@ class _Webservices implements Webservices {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<QuizModel>> getTasks(int amount) async {
+  Future<QuizResponse> getTasks(int amount) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'amount': amount};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<QuizModel>>(
+    final _options = _setStreamType<QuizResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -37,12 +37,10 @@ class _Webservices implements Webservices {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<QuizModel> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late QuizResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => QuizModel.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = QuizResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
