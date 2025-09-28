@@ -9,7 +9,7 @@ class QuizCubit extends Cubit<QuizState> {
   final QuizRepo quizRepo;
   QuizCubit(this.quizRepo) : super(QuizLoading());
 
-  Future<void> loadQuiz(int amount,int category,String difficulty) async {
+  Future<void> loadQuiz({required int amount,required int category,required String difficulty}) async {
     try {
       final List<QuizModel> quizzes = await quizRepo.fetchQuiz(amount,category,difficulty);
       emit(QuizSuccess(quizzes));
