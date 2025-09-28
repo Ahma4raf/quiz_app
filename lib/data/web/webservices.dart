@@ -12,5 +12,9 @@ abstract class Webservices {
   factory Webservices(Dio dio, {String? baseUrl}) = _Webservices;
 
   @GET('api.php')
-  Future<QuizResponse> getTasks(@Query('amount') int amount);
+  Future<QuizResponse> getTasks(
+    @Query('amount') int amount,
+    @Query('category') int category,
+    @Query('difficulty') String difficulty,
+  );
 }

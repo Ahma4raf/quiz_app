@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/busniess_logic/cubit/quiz_cubit.dart';
+import 'package:quiz_app/data/repo/quiz_repo.dart';
+import 'package:quiz_app/injection.dart';
+import 'package:quiz_app/presentation/Quiz_pick.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  injection();
   runApp(const MainApp());
 }
 
@@ -9,11 +15,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      home: BlocProvider(
+        create: (context) => QuizCubit(getIt<QuizRepo>()),
+        child: QuizPickScreen(),
       ),
     );
   }

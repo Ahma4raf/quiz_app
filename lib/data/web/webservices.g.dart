@@ -22,9 +22,17 @@ class _Webservices implements Webservices {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<QuizResponse> getTasks(int amount) async {
+  Future<QuizResponse> getTasks(
+    int amount,
+    int category,
+    String difficulty,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'amount': amount};
+    final queryParameters = <String, dynamic>{
+      r'amount': amount,
+      r'category': category,
+      r'difficulty': difficulty,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<QuizResponse>(
