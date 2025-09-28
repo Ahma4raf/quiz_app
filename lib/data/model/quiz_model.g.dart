@@ -8,9 +8,9 @@ part of 'quiz_model.dart';
 
 QuizModel _$QuizModelFromJson(Map<String, dynamic> json) => QuizModel(
   category: json['category'] as String?,
-  correctAnswer: json['correctAnswer'] as String?,
+  correctAnswer: json['correct_answer'] as String?,
   difficulty: json['difficulty'] as String?,
-  incorrectAnswers: (json['incorrectAnswers'] as List<dynamic>?)
+  incorrectAnswers: (json['incorrect_answers'] as List<dynamic>?)
       ?.map((e) => e as String)
       .toList(),
   question: json['question'] as String?,
@@ -20,6 +20,6 @@ Map<String, dynamic> _$QuizModelToJson(QuizModel instance) => <String, dynamic>{
   'difficulty': instance.difficulty,
   'category': instance.category,
   'question': instance.question,
-  'correctAnswer': instance.correctAnswer,
-  'incorrectAnswers': instance.incorrectAnswers,
+  'correct_answer': instance.correctAnswer,
+  'incorrect_answers': instance.incorrectAnswers,
 };

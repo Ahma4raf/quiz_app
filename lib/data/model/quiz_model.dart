@@ -7,7 +7,9 @@ class QuizModel {
   String? difficulty;
   String? category;
   String? question;
+  @JsonKey(name: 'correct_answer')
   String? correctAnswer;
+  @JsonKey(name: 'incorrect_answers')
   List<String>? incorrectAnswers;
   QuizModel({
     this.category,
@@ -21,4 +23,10 @@ class QuizModel {
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$QuizModelToJson(this);
+
+  List<String?> getShuffledAnswers() {
+    final Answers = [...?incorrectAnswers, correctAnswer];
+    Answers.shuffle();
+    return Answers;
+  }
 }
