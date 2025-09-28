@@ -4,7 +4,7 @@ part 'category_model.g.dart';
 
 @JsonSerializable()
 class CategoryModel {
-  String? id;
+  int? id;
   String? name;
 
   CategoryModel(this.id, this.name);
@@ -14,4 +14,3 @@ class CategoryModel {
 
   Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
 }
-

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quiz_app/data/model/category_response.dart';
 import 'package:quiz_app/data/model/quiz_Response.dart';
 import 'package:quiz_app/data/model/quiz_model.dart';
 import 'package:quiz_app/data/web/strings.dart';
@@ -17,4 +18,6 @@ abstract class Webservices {
     @Query('category') int category,
     @Query('difficulty') String difficulty,
   );
+  @GET(AppStrings.category)
+  Future<CategoryResponse> getCategories();
 }

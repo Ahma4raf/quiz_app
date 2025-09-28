@@ -1,9 +1,11 @@
+import 'package:quiz_app/data/model/category_model.dart';
 import 'package:quiz_app/data/model/quiz_model.dart';
 import 'package:quiz_app/data/web/webservices.dart';
 
 class QuizRepo {
   final Webservices webservices;
   QuizRepo(this.webservices);
+
   Future<List<QuizModel>> fetchQuiz(
     int amount,
     int category,
@@ -11,5 +13,10 @@ class QuizRepo {
   ) async {
     final response = await webservices.getTasks(amount, category, difficulty);
     return response.results;
+  }
+
+  Future<List<CategoryModel>> fetchCat() async {
+    final response = await webservices.getCategories();
+    return response.categories;
   }
 }
