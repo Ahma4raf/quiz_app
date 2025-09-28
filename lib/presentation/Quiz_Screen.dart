@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/busniess_logic/cubit/quiz_cubit.dart';
 import 'package:quiz_app/data/repo/quiz_repo.dart';
 import 'package:quiz_app/injection.dart';
+import 'package:quiz_app/presentation/Quiz_pick.dart';
 
 class QuizScreen extends StatelessWidget {
   final int categoryId;
@@ -35,7 +36,23 @@ class QuizScreen extends StatelessWidget {
             } else if (state is QuizSuccess) {
               if (state.isFinished) {
                 return Center(
-                  child: Text("🎉 Quiz Finished!\nYour Score: ${state.score}"),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "🎉 Quiz Finished!\n      Your Score: ${state.score}",
+                      ),
+                      SizedBox(height: 30),
+                      ElevatedButton(
+                        child: Text('Go back'),
+
+                        onPressed: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => QuizPickScreen()),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }
               final q = state.quizzes[state.currentIndex];

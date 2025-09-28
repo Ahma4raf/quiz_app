@@ -16,16 +16,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => QuizCubit(getIt<QuizRepo>())),
-          BlocProvider(
-            create: (context) =>
-                CategoryCubit(getIt<QuizRepo>())..loadCategories(),
-          ),
-        ],
-        child: QuizPickScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => QuizCubit(getIt<QuizRepo>())),
+        BlocProvider(
+          create: (context) =>
+              CategoryCubit(getIt<QuizRepo>())..loadCategories(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const QuizPickScreen(),
       ),
     );
   }

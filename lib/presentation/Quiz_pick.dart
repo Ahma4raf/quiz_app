@@ -86,7 +86,7 @@ class _QuizPickScreenState extends State<QuizPickScreen> {
                     onPressed: () {
                       if (selectedCategory != null &&
                           selectedDifficulty != null) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (_) => QuizScreen(
